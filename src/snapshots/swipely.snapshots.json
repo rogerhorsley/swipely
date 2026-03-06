@@ -1,0 +1,142 @@
+{
+  "page": "swipely",
+  "snapshots": [
+    {
+      "id": "swipely-browse-default",
+      "name": "浏览页 — 默认状态",
+      "purpose": "Review full-screen photo viewer with top progress counter, right action bar, bottom progress line and photo metadata.",
+      "priority": "p0",
+      "state": {
+        "activeTab": "browse",
+        "currentIndex": 0,
+        "likedIds": [],
+        "deletedIds": [],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-browse-mid-progress",
+      "name": "浏览页 — 中途进度",
+      "purpose": "Review progress counter and progress bar at mid-point with some photos liked and one deleted.",
+      "priority": "p0",
+      "state": {
+        "activeTab": "browse",
+        "currentIndex": 7,
+        "likedIds": ["p1", "p3", "p5"],
+        "deletedIds": ["p2"],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-archive-sheet-open",
+      "name": "归档底部弹出层",
+      "purpose": "Review archive bottom sheet overlay with folder list and new folder option, sliding up over the photo.",
+      "priority": "p0",
+      "state": {
+        "activeTab": "browse",
+        "currentIndex": 2,
+        "likedIds": ["p1"],
+        "deletedIds": [],
+        "isArchiveSheetOpen": true,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-liked-tab-populated",
+      "name": "喜欢页 — 有照片",
+      "purpose": "Review 2-column grid layout with red heart badges on each liked photo thumbnail.",
+      "priority": "p0",
+      "state": {
+        "activeTab": "liked",
+        "currentIndex": 3,
+        "likedIds": ["p1", "p2", "p3", "p4", "p5"],
+        "deletedIds": [],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-liked-tab-empty",
+      "name": "喜欢页 — 空状态",
+      "purpose": "Review empty state message and hint text when no photos have been liked yet.",
+      "priority": "p1",
+      "state": {
+        "activeTab": "liked",
+        "currentIndex": 0,
+        "likedIds": [],
+        "deletedIds": [],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-folders-tab",
+      "name": "文件夹页 — 预填充",
+      "purpose": "Review folder card list with thumbnail strips, photo counts, and the new folder button.",
+      "priority": "p0",
+      "state": {
+        "activeTab": "folders",
+        "currentIndex": 0,
+        "likedIds": [],
+        "deletedIds": [],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-all-done",
+      "name": "浏览页 — 全部已删除",
+      "purpose": "Review end-of-queue state when all photos have been deleted, showing completed message.",
+      "priority": "p1",
+      "state": {
+        "activeTab": "browse",
+        "currentIndex": 0,
+        "likedIds": [],
+        "deletedIds": ["p1","p2","p3","p4","p5","p6","p7","p8","p9","p10","p11","p12","p13","p14","p15","p16","p17","p18"],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    },
+    {
+      "id": "swipely-delete-confirm-pending",
+      "name": "浏览页 — 删除确认中",
+      "purpose": "Review delete button in pending-confirm state: red background, white trash icon, label shows '确认?', pulse animation active. Second tap within 2.5s confirms deletion.",
+      "priority": "p1",
+      "reviewNote": "deleteConfirmPending is local useState, not in Zustand store — this snapshot shows the baseline browse state; the confirm state is rendered by local component state.",
+      "state": {
+        "activeTab": "browse",
+        "currentIndex": 1,
+        "likedIds": [],
+        "deletedIds": [],
+        "isArchiveSheetOpen": false,
+        "animState": "idle",
+        "heartAnimPhotoId": "",
+        "isGlitching": false,
+        "transitionDirection": "up"
+      }
+    }
+  ]
+}

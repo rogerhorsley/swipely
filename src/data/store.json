@@ -1,0 +1,27 @@
+{
+  "photos": [
+    { "id": "p1", "url": "https://images.unsplash.com/photo-1612442377806-9cb831587c6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-03-15", "location": "上海图书馆" },
+    { "id": "p2", "url": "https://images.unsplash.com/photo-1626373888060-358283e03721?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-03-12", "location": "北京798" },
+    { "id": "p3", "url": "https://images.unsplash.com/photo-1665101897866-0ecc4869c4b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-02-28", "location": "成都宽窄巷子" },
+    { "id": "p4", "url": "https://images.unsplash.com/photo-1726286311396-20835b4bf0a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-02-14", "location": "杭州西湖" },
+    { "id": "p5", "url": "https://images.unsplash.com/photo-1723060652090-15471b9fcc85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-01-30", "location": "广州" },
+    { "id": "p6", "url": "https://images.unsplash.com/photo-1746912488272-ca04d0db286a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-01-22", "location": "深圳" },
+    { "id": "p7", "url": "https://images.unsplash.com/photo-1612442377806-9cb831587c6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-01-18", "location": "南京" },
+    { "id": "p8", "url": "https://images.unsplash.com/photo-1626373888060-358283e03721?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2024-01-10", "location": "苏州" },
+    { "id": "p9", "url": "https://images.unsplash.com/photo-1665101897866-0ecc4869c4b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-12-25", "location": "西安" },
+    { "id": "p10", "url": "https://images.unsplash.com/photo-1726286311396-20835b4bf0a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-12-20", "location": "重庆" },
+    { "id": "p11", "url": "https://images.unsplash.com/photo-1723060652090-15471b9fcc85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-12-15", "location": "武汉" },
+    { "id": "p12", "url": "https://images.unsplash.com/photo-1746912488272-ca04d0db286a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-12-01", "location": "青岛" },
+    { "id": "p13", "url": "https://images.unsplash.com/photo-1612442377806-9cb831587c6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-11-28", "location": "厦门" },
+    { "id": "p14", "url": "https://images.unsplash.com/photo-1626373888060-358283e03721?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-11-20", "location": "桂林" },
+    { "id": "p15", "url": "https://images.unsplash.com/photo-1665101897866-0ecc4869c4b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-11-10", "location": "丽江" },
+    { "id": "p16", "url": "https://images.unsplash.com/photo-1726286311396-20835b4bf0a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-10-30", "location": "大理" },
+    { "id": "p17", "url": "https://images.unsplash.com/photo-1723060652090-15471b9fcc85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-10-20", "location": "三亚" },
+    { "id": "p18", "url": "https://images.unsplash.com/photo-1746912488272-ca04d0db286a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800", "date": "2023-10-10", "location": "海口" }
+  ],
+  "folders": [
+    { "id": "f1", "name": "旅行 2024", "photoIds": ["p1", "p4", "p5"] },
+    { "id": "f2", "name": "朋友", "photoIds": ["p2", "p7"] },
+    { "id": "f3", "name": "随手拍", "photoIds": ["p3", "p6", "p8", "p9"] }
+  ]
+}
