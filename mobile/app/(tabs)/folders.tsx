@@ -12,8 +12,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Folder, FolderPlus } from 'lucide-react-native';
 import { useStore } from '../../src/stores/useStore';
+import { useLocalUri } from '../../src/utils/useLocalUri';
 import { COLORS, SPACING, RADIUS } from '../../src/constants/theme';
 import type { Photo, Folder as FolderType } from '../../src/types';
+
+function ThumbImage({ photo }: { photo: Photo }) {
+  const uri = useLocalUri(photo.id, photo.uri);
+  if (!uri) return <View style={styles.thumb} />;
+  return <Image source={{ uri }} style={styles.thumb} />;
+}
 
 function FolderCard({
   folder,
@@ -37,7 +44,7 @@ function FolderCard({
       <View style={styles.thumbStrip}>
         {thumbs.length > 0 ? (
           thumbs.map((p) => (
-            <Image key={p.id} source={{ uri: p.uri }} style={styles.thumb} />
+            <ThumbImage key={p.id} photo={p} />
           ))
         ) : (
           <View style={styles.emptyStrip}>

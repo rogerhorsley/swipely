@@ -15,6 +15,16 @@ import {
 import { X, FolderPlus, Folder, Plus } from 'lucide-react-native';
 import { COLORS, SPACING, RADIUS } from '../constants/theme';
 import type { Folder as FolderType, Photo } from '../types';
+import { useLocalUri } from '../utils/useLocalUri';
+
+function FolderThumb({ photo }: { photo: Photo }) {
+  const uri = useLocalUri(photo.id, photo.uri);
+  if (!uri) return <View style={[thumbStyle, thumbPlaceholderStyle]}><Folder size={16} color={COLORS.disabled} /></View>;
+  return <Image source={{ uri }} style={thumbStyle} />;
+}
+
+const thumbStyle = { width: 40, height: 40, borderRadius: 6 } as const;
+const thumbPlaceholderStyle = { backgroundColor: '#F5F5F5', alignItems: 'center' as const, justifyContent: 'center' as const };
 
 const { height: SCREEN_H } = Dimensions.get('window');
 
@@ -46,10 +56,9 @@ export default function ArchiveSheet({
     setIsCreating(false);
   };
 
-  const getFolderThumb = (folder: FolderType): string | null => {
+  const getFolderThumbPhoto = (folder: FolderType): Photo | null => {
     if (folder.photoIds.length === 0) return null;
-    const photo = photos.find((p) => p.id === folder.photoIds[0]);
-    return photo?.uri ?? null;
+    return photos.find((p) => p.id === folder.photoIds[0]) ?? null;
   };
 
   return (
@@ -98,15 +107,15 @@ export default function ArchiveSheet({
           {/* Folder list */}
           <ScrollView style={styles.list} showsVerticalScrollIndicator={false}>
             {folders.map((folder) => {
-              const thumb = getFolderThumb(folder);
+              const thumbPhoto = getFolderThumbPhoto(folder);
               return (
                 <Pressable
                   key={folder.id}
                   style={styles.folderRow}
                   onPress={() => onSelectFolder(folder.id)}
                 >
-                  {thumb ? (
-                    <Image source={{ uri: thumb }} style={styles.thumb} />
+                  {thumbPhoto ? (
+                    <FolderThumb photo={thumbPhoto} />
                   ) : (
                     <View style={[styles.thumb, styles.thumbPlaceholder]}>
                       <Folder size={16} color={COLORS.disabled} />

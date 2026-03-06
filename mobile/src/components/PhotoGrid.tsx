@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, Image, FlatList, StyleSheet, Dimensions } from 'react-native';
 import type { Photo } from '../types';
+import { useLocalUri } from '../utils/useLocalUri';
 
 const GAP = 2;
 const NUM_COLS = 3;
@@ -13,9 +14,10 @@ interface Props {
 }
 
 function PhotoItem({ photo, overlay }: { photo: Photo; overlay?: Props['overlay'] }) {
+  const uri = useLocalUri(photo.id, photo.uri);
   return (
     <View style={styles.item}>
-      <Image source={{ uri: photo.uri }} style={styles.image} />
+      {uri && <Image source={{ uri }} style={styles.image} />}
       {overlay?.(photo)}
     </View>
   );
