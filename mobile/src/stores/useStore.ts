@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { create } from 'zustand';
 import * as MediaLibrary from 'expo-media-library';
 import type { Photo, Folder } from '../types';
@@ -136,30 +137,29 @@ export const useStore = create<StoreState>((set, get) => ({
   setCurrentIndex: (index) => set({ currentIndex: index }),
 }));
 
-// Selectors
+// Hooks - use useMemo to avoid infinite re-render from new array references
 export function useActivePhotos() {
-  return useStore((s) => s.photos.filter((p) => !s.deletedIds.includes(p.id)));
+  const photos = useStore((s) => s.photos);
+  const deletedIds = useStore((s) => s.deletedIds);
+  return useMemo(() => photos.filter((p) => !deletedIds.includes(p.id)), [photos, deletedIds]);
 }
 
 export function useCurrentPhoto() {
-  return useStore((s) => {
-    const active = s.photos.filter((p) => !s.deletedIds.includes(p.id));
-    return active[s.currentIndex] ?? null;
-  });
+  const photos = useStore((s) => s.photos);
+  const deletedIds = useStore((s) => s.deletedIds);
+  const currentIndex = useStore((s) => s.currentIndex);
+  return useMemo(() => {
+    const active = photos.filter((p) => !deletedIds.includes(p.id));
+    return active[currentIndex] ?? null;
+  }, [photos, deletedIds, currentIndex]);
 }
 
 export function useLikedPhotos() {
-  return useStore((s) =>
-    s.photos.filter((p) => s.likedIds.includes(p.id) && !s.deletedIds.includes(p.id)),
+  const photos = useStore((s) => s.photos);
+  const likedIds = useStore((s) => s.likedIds);
+  const deletedIds = useStore((s) => s.deletedIds);
+  return useMemo(
+    () => photos.filter((p) => likedIds.includes(p.id) && !deletedIds.includes(p.id)),
+    [photos, likedIds, deletedIds],
   );
-}
-
-export function useFolderPhotos(folderId: string) {
-  return useStore((s) => {
-    const folder = s.folders.find((f) => f.id === folderId);
-    if (!folder) return [];
-    return s.photos.filter(
-      (p) => folder.photoIds.includes(p.id) && !s.deletedIds.includes(p.id),
-    );
-  });
 }
