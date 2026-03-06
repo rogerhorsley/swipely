@@ -1,53 +1,94 @@
-import { View, Text, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { Heart } from 'lucide-react-native';
+import { useLikedPhotos } from '../../src/stores/useStore';
+import PhotoGrid from '../../src/components/PhotoGrid';
+import { COLORS, SPACING } from '../../src/constants/theme';
 
 export default function LikedScreen() {
+  const insets = useSafeAreaInsets();
+  const likedPhotos = useLikedPhotos();
+
+  const heartOverlay = () => (
+    <View style={styles.heartBadge}>
+      <Heart size={12} color="#fff" fill="#fff" />
+    </View>
+  );
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ExpoStatusBar style="dark" />
-      <View style={styles.content}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <StatusBar style="dark" />
+
+      {/* Header */}
+      <View style={styles.header}>
         <Text style={styles.title}>喜欢</Text>
-        <Text style={styles.subtitle}>查看所有点赞的照片</Text>
-        <Text style={styles.description}>
-          这里将显示所有被标记为喜欢的照片{'\n'}
-          以网格形式展示{'\n'}
-          方便快速查看和管理
-        </Text>
+        <Text style={styles.count}>{likedPhotos.length}</Text>
       </View>
-    </SafeAreaView>
+
+      {likedPhotos.length === 0 ? (
+        <View style={styles.empty}>
+          <Heart size={48} color={COLORS.disabled} strokeWidth={1.2} />
+          <Text style={styles.emptyTitle}>还没有喜欢的照片</Text>
+          <Text style={styles.emptyHint}>在浏览页点击心形按钮</Text>
+        </View>
+      ) : (
+        <PhotoGrid photos={likedPhotos} overlay={heartOverlay} />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#C4A57B',
-    paddingTop: StatusBar.currentHeight || 0,
+    backgroundColor: COLORS.background,
   },
-  content: {
+  header: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.lg,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: COLORS.primary,
+  },
+  count: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: COLORS.secondary,
+    marginLeft: SPACING.sm,
+  },
+  empty: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    gap: SPACING.sm,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FF4757',
-    marginBottom: 12,
-    letterSpacing: 1.2,
+  emptyTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: COLORS.primary,
+    marginTop: SPACING.md,
   },
-  subtitle: {
-    fontSize: 18,
-    color: '#7FCDFF',
-    marginBottom: 24,
-    letterSpacing: 0.8,
+  emptyHint: {
+    fontSize: 14,
+    color: COLORS.secondary,
   },
-  description: {
-    fontSize: 16,
-    color: '#FFFFFF',
-    textAlign: 'center',
-    lineHeight: 24,
-    letterSpacing: 0.6,
+  heartBadge: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: COLORS.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
