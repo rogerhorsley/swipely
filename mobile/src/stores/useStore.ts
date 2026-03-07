@@ -17,9 +17,9 @@ interface StoreState {
   loadPhotos: () => Promise<void>;
   loadPersisted: () => Promise<void>;
   toggleLike: (id: string) => void;
-  deletePhoto: (id: string) => void;
-  archiveToFolder: (photoId: string, folderId: string) => void;
-  createFolder: (name: string) => string;
+  deletePhoto: (id: string) => Promise<boolean>;
+  archiveToFolder: (photoId: string, folderId: string) => Promise<void>;
+  createFolder: (name: string) => Promise<string>;
   openArchiveSheet: () => void;
   closeArchiveSheet: () => void;
   advanceToNext: () => void;
@@ -89,28 +89,48 @@ export const useStore = create<StoreState>((set, get) => ({
     persist(get());
   },
 
-  deletePhoto: (id) => {
+  deletePhoto: async (id) => {
     const { deletedIds } = get();
-    if (deletedIds.includes(id)) return;
-    set({ deletedIds: [...deletedIds, id] });
-    persist(get());
-    // auto-advance handled by caller
+    if (deletedIds.includes(id)) return false;
+    try {
+      const success = await MediaLibrary.deleteAssetsAsync([id]);
+      if (!success) return false;
+      set({ deletedIds: [...deletedIds, id] });
+      persist(get());
+      return true;
+    } catch {
+      return false;
+    }
   },
 
-  archiveToFolder: (photoId, folderId) => {
+  archiveToFolder: async (photoId, folderId) => {
     const { folders } = get();
+    const folder = folders.find((f) => f.id === folderId);
+    if (!folder || folder.photoIds.includes(photoId)) return;
     const next = folders.map((f) =>
-      f.id === folderId && !f.photoIds.includes(photoId)
-        ? { ...f, photoIds: [...f.photoIds, photoId] }
-        : f,
+      f.id === folderId ? { ...f, photoIds: [...f.photoIds, photoId] } : f,
     );
     set({ folders: next });
     persist(get());
+    if (folder.albumId) {
+      try {
+        await MediaLibrary.addAssetsToAlbumAsync([photoId], folder.albumId, false);
+      } catch {
+        // system album sync failed, local state already updated
+      }
+    }
   },
 
-  createFolder: (name) => {
+  createFolder: async (name) => {
     const id = `folder_${Date.now()}`;
-    const folder: Folder = { id, name, photoIds: [], createdAt: new Date().toISOString() };
+    let albumId: string | undefined;
+    try {
+      const album = await MediaLibrary.createAlbumAsync(name);
+      albumId = album.id;
+    } catch {
+      // system album creation failed, continue with local-only folder
+    }
+    const folder: Folder = { id, name, photoIds: [], createdAt: new Date().toISOString(), albumId };
     set({ folders: [...get().folders, folder] });
     persist(get());
     return id;

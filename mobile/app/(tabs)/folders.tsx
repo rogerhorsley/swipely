@@ -65,10 +65,10 @@ export default function FoldersScreen() {
   const [isCreating, setIsCreating] = useState(false);
   const [newName, setNewName] = useState('');
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     const name = newName.trim();
     if (!name) return;
-    createFolder(name);
+    await createFolder(name);
     setNewName('');
     setIsCreating(false);
   };

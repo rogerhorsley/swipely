@@ -76,15 +76,16 @@ export default function BrowseScreen() {
     }
   }, [currentPhoto, likedIds, toggleLike]);
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = useCallback(async () => {
     if (!currentPhoto) return;
-    deletePhoto(currentPhoto.id);
-  }, [currentPhoto, deletePhoto]);
+    const deleted = await deletePhoto(currentPhoto.id);
+    if (deleted) advanceToNext();
+  }, [currentPhoto, deletePhoto, advanceToNext]);
 
   const handleSelectFolder = useCallback(
-    (folderId: string) => {
+    async (folderId: string) => {
       if (!currentPhoto) return;
-      archiveToFolder(currentPhoto.id, folderId);
+      await archiveToFolder(currentPhoto.id, folderId);
       closeArchiveSheet();
       advanceToNext();
     },
@@ -92,10 +93,10 @@ export default function BrowseScreen() {
   );
 
   const handleCreateFolder = useCallback(
-    (name: string) => {
+    async (name: string) => {
       if (!currentPhoto) return;
-      const folderId = createFolder(name);
-      archiveToFolder(currentPhoto.id, folderId);
+      const folderId = await createFolder(name);
+      await archiveToFolder(currentPhoto.id, folderId);
       closeArchiveSheet();
       advanceToNext();
     },

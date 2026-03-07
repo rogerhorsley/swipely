@@ -12,6 +12,7 @@ export interface Folder {
   name: string;
   photoIds: string[];
   createdAt: string;
+  albumId?: string;
 }
 
 export type TabId = 'browse' | 'liked' | 'folders';
